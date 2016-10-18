@@ -1,0 +1,11 @@
+<h1>Paginator</h1>
+<div class="showdata">
+    <p *ngFor="let pageinfo of currentResults">{{pageinfo}}</p>
+</div>
+<div class="paginator-div">
+    <a><i class="icon iconfont">&#xe606;</i></a>
+    <a><i class="icon iconfont">&#xe604;</i></a>
+    <a *ngFor="let n of showPagesArray let i =index" [class.selected]="(n) == currentPage" (click)="getCurrentPageNum(n)">{{n}}</a>
+    <a><i class="icon iconfont">&#xe605;</i></a>
+    <a><i class="icon iconfont">&#xe607;</i></a>
+</div>
