@@ -11,7 +11,7 @@ import { PaginatorServie } from '../paginator.service';
 export class Paginator implements OnInit{
     pagesArray: Array<number> = [];        //总页面数
     showPagesArray: Array<number> = [];       //展示页码数组
-    pageColumn: number = 10;            //页码数
+    pageColumn: number = 5;            //页码数
     results: Array<number>;            //总数据
     currentResults: Array<number>;     //当前页数据
     perPageItems: number = 10;         //每页数据条数
@@ -76,6 +76,82 @@ export class Paginator implements OnInit{
                     this.showPagesArray.push(this.totalPagesNum-this.pageColumn+i+1);
                 }
                 console.log('asshole');
+            }
+        }
+    }
+
+    firstPage(){
+        this.currentPage = 1;
+        this.getCurrentPageData(this.currentPage,this.perPageItems);
+        this.showPagesArray = [];
+        for(let i=0;i<this.pageColumn;i++){
+            this.showPagesArray.push(i+1);
+        }
+    }
+
+    lastPage(){
+        this.currentPage = this.totalPagesNum;
+        this.getCurrentPageData(this.currentPage,this.perPageItems);
+        this.showPagesArray = [];
+        for(let i=0;i<this.pageColumn;i++){
+            this.showPagesArray.push(this.totalPagesNum-this.pageColumn+i+1);
+        }
+    }
+
+    previousPage(){
+        if(this.currentPage==1){
+            this.firstPage();
+        }else if((this.currentPage-1)>0){
+            if(this.currentPage<=(this.pageColumn-Math.floor(this.pageColumn/2))){
+                this.currentPage--;
+                this.showPagesArray = [];
+                for(let i=0;i<this.pageColumn;i++){
+                    this.showPagesArray.push(i+1);
+                }
+                this.getCurrentPageData(this.currentPage,this.perPageItems);
+            }else if(this.currentPage>(this.pageColumn-Math.floor(this.pageColumn/2))&&this.currentPage<=(this.totalPagesNum-Math.floor(this.pageColumn/2))){
+                this.currentPage--;
+                this.showPagesArray = [];
+                for(let i=0; i<this.pageColumn; i++){
+                    this.showPagesArray.push(this.pagesArray[this.currentPage - Math.floor(this.pageColumn/2)-1+i]);
+                }
+                this.getCurrentPageData(this.currentPage,this.perPageItems);
+            }else{
+                this.currentPage--;
+                this.showPagesArray = [];
+                for(let i=0;i<this.pageColumn;i++){
+                    this.showPagesArray.push(this.totalPagesNum-this.pageColumn+i+1);
+                }
+                this.getCurrentPageData(this.currentPage,this.perPageItems);
+            }
+        }
+    }
+
+    nextPage(){
+        if(this.currentPage==this.totalPagesNum){
+            this.lastPage();
+        }else if((this.currentPage)<this.totalPagesNum){
+            if(this.currentPage>=1&&this.currentPage<=(this.pageColumn-Math.floor(this.pageColumn/2))){
+                this.currentPage++;
+                this.showPagesArray = [];
+                for(let i=0;i<this.pageColumn;i++){
+                    this.showPagesArray.push(i+1);
+                }
+                this.getCurrentPageData(this.currentPage,this.perPageItems);
+            }else if(this.currentPage>(this.pageColumn-Math.floor(this.pageColumn/2))&&this.currentPage<(this.totalPagesNum-Math.floor(this.pageColumn/2))){
+                this.currentPage++;
+                this.showPagesArray = [];
+                for(let i=0; i<this.pageColumn; i++){
+                    this.showPagesArray.push(this.pagesArray[this.currentPage - Math.floor(this.pageColumn/2)-1+i]);
+                }
+                this.getCurrentPageData(this.currentPage,this.perPageItems);
+            }else{
+                this.currentPage++;
+                this.showPagesArray = [];
+                for(let i=0;i<this.pageColumn;i++){
+                    this.showPagesArray.push(this.totalPagesNum-this.pageColumn+i+1);
+                }
+                this.getCurrentPageData(this.currentPage,this.perPageItems);
             }
         }
     }

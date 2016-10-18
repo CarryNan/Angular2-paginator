@@ -15,7 +15,7 @@ var Paginator = (function () {
         this.paginatorService = paginatorService;
         this.pagesArray = []; //总页面数
         this.showPagesArray = []; //展示页码数组
-        this.pageColumn = 10; //页码数
+        this.pageColumn = 5; //页码数
         this.perPageItems = 10; //每页数据条数
         this.currentPage = 1; //默认页
         this.results = paginatorService.getData();
@@ -73,6 +73,84 @@ var Paginator = (function () {
                     this.showPagesArray.push(this.totalPagesNum - this.pageColumn + i + 1);
                 }
                 console.log('asshole');
+            }
+        }
+    };
+    Paginator.prototype.firstPage = function () {
+        this.currentPage = 1;
+        this.getCurrentPageData(this.currentPage, this.perPageItems);
+        this.showPagesArray = [];
+        for (var i = 0; i < this.pageColumn; i++) {
+            this.showPagesArray.push(i + 1);
+        }
+    };
+    Paginator.prototype.lastPage = function () {
+        this.currentPage = this.totalPagesNum;
+        this.getCurrentPageData(this.currentPage, this.perPageItems);
+        this.showPagesArray = [];
+        for (var i = 0; i < this.pageColumn; i++) {
+            this.showPagesArray.push(this.totalPagesNum - this.pageColumn + i + 1);
+        }
+    };
+    Paginator.prototype.previousPage = function () {
+        if (this.currentPage == 1) {
+            this.firstPage();
+        }
+        else if ((this.currentPage - 1) > 0) {
+            if (this.currentPage <= (this.pageColumn - Math.floor(this.pageColumn / 2))) {
+                this.currentPage--;
+                this.showPagesArray = [];
+                for (var i = 0; i < this.pageColumn; i++) {
+                    this.showPagesArray.push(i + 1);
+                }
+                this.getCurrentPageData(this.currentPage, this.perPageItems);
+            }
+            else if (this.currentPage > (this.pageColumn - Math.floor(this.pageColumn / 2)) && this.currentPage <= (this.totalPagesNum - Math.floor(this.pageColumn / 2))) {
+                this.currentPage--;
+                this.showPagesArray = [];
+                for (var i = 0; i < this.pageColumn; i++) {
+                    this.showPagesArray.push(this.pagesArray[this.currentPage - Math.floor(this.pageColumn / 2) - 1 + i]);
+                }
+                this.getCurrentPageData(this.currentPage, this.perPageItems);
+            }
+            else {
+                this.currentPage--;
+                this.showPagesArray = [];
+                for (var i = 0; i < this.pageColumn; i++) {
+                    this.showPagesArray.push(this.totalPagesNum - this.pageColumn + i + 1);
+                }
+                this.getCurrentPageData(this.currentPage, this.perPageItems);
+            }
+        }
+    };
+    Paginator.prototype.nextPage = function () {
+        if (this.currentPage == this.totalPagesNum) {
+            this.lastPage();
+        }
+        else if ((this.currentPage) < this.totalPagesNum) {
+            if (this.currentPage >= 1 && this.currentPage <= (this.pageColumn - Math.floor(this.pageColumn / 2))) {
+                this.currentPage++;
+                this.showPagesArray = [];
+                for (var i = 0; i < this.pageColumn; i++) {
+                    this.showPagesArray.push(i + 1);
+                }
+                this.getCurrentPageData(this.currentPage, this.perPageItems);
+            }
+            else if (this.currentPage > (this.pageColumn - Math.floor(this.pageColumn / 2)) && this.currentPage < (this.totalPagesNum - Math.floor(this.pageColumn / 2))) {
+                this.currentPage++;
+                this.showPagesArray = [];
+                for (var i = 0; i < this.pageColumn; i++) {
+                    this.showPagesArray.push(this.pagesArray[this.currentPage - Math.floor(this.pageColumn / 2) - 1 + i]);
+                }
+                this.getCurrentPageData(this.currentPage, this.perPageItems);
+            }
+            else {
+                this.currentPage++;
+                this.showPagesArray = [];
+                for (var i = 0; i < this.pageColumn; i++) {
+                    this.showPagesArray.push(this.totalPagesNum - this.pageColumn + i + 1);
+                }
+                this.getCurrentPageData(this.currentPage, this.perPageItems);
             }
         }
     };
