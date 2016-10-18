@@ -8,4 +8,8 @@
     <a *ngFor="let n of showPagesArray let i =index" [class.selected]="(n) == currentPage" (click)="getCurrentPageNum(n)">{{n}}</a>
     <a (click)="nextPage()"><i class="icon iconfont">&#xe605;</i></a>
     <a (click)="lastPage()"><i class="icon iconfont">&#xe607;</i></a>
+    
 </div>
+<select (change)= "perPageItemsChanged($event)">
+    <option *ngFor="let item of perPageItemsArray" [value]="item">每页展示{{item}}条</option>
+</select>

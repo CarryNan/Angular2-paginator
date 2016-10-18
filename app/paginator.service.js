@@ -23,7 +23,7 @@ var PaginatorServie = (function () {
         return exports.DATA;
     };
     PaginatorServie.prototype.getCurrentPageData = function (currentPageNum, perPageItems) {
-        return exports.DATA.slice((currentPageNum - 1) * 10, (currentPageNum - 1) * 10 + 10);
+        return exports.DATA.slice((currentPageNum - 1) * perPageItems, currentPageNum * perPageItems);
     };
     PaginatorServie.prototype.getPagesNum = function (perPageItems) {
         return Math.ceil(exports.DATA.length / perPageItems); //总页数

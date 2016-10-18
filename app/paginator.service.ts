@@ -15,7 +15,7 @@ export class PaginatorServie{
     }
 
     getCurrentPageData(currentPageNum,perPageItems){
-        return DATA.slice((currentPageNum-1)*10,(currentPageNum-1)*10+10);
+        return DATA.slice((currentPageNum-1)*perPageItems,currentPageNum*perPageItems);
     }
 
     getPagesNum(perPageItems){
